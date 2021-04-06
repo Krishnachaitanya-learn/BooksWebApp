@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const express = require('express');
 //chalk is for colouring terminal messages
@@ -6,6 +7,7 @@ const chalk = require('chalk');
 const debug = require('debug')('app');
 const morgan = require('morgan');
 const path = require('path');
+const { title } = require('process');
 
 const app = express();
 
@@ -34,7 +36,14 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-	res.sendFile(path.join(__dirname, 'views/index.html'));
+	res.render('index',
+		{
+			nav: [
+				{ link: '/books', title: 'Books' },
+				{ link: '/authors', title: 'Authors' }
+			],
+			title: 'Library'
+		});
 });
 
 app.listen(port, () => {
